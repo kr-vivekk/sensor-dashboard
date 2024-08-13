@@ -1,3 +1,6 @@
+/**
+ * Updates and displays the statistics for each sensor type.
+ */
 let displayStats = function () {
     let humStats = calculateStats(humArr);
     let tempStats = calculateStats(tempArr);
@@ -6,6 +9,7 @@ let displayStats = function () {
     let soilStats = calculateStats(soilArr);
     let ultraStats = calculateStats(ultraArr);
 
+    // Display the statistics in the HTML elements
     $('#humidity-stats').html(`Min: ${humStats.min}, Max: ${humStats.max}, Avg: ${humStats.avg.toFixed(2)}`);
     $('#temperature-stats').html(`Min: ${tempStats.min}, Max: ${tempStats.max}, Avg: ${tempStats.avg.toFixed(2)}`);
     $('#gas-stats').html(`Min: ${gasStats.min}, Max: ${gasStats.max}, Avg: ${gasStats.avg.toFixed(2)}`);
@@ -14,6 +18,12 @@ let displayStats = function () {
     $('#ultra-stats').html(`Min: ${ultraStats.min}, Max: ${ultraStats.max}, Avg: ${ultraStats.avg.toFixed(2)}`);
 }
 
+/**
+ * Calculates the minimum, maximum, and average values of an array.
+ * 
+ * @param {number[]} arr - The array of numbers to calculate statistics for.
+ * @returns {Object} An object containing the min, max, and avg values.
+ */
 let calculateStats = function (arr) {
     let min = Math.min(...arr);
     let max = Math.max(...arr);
@@ -21,6 +31,10 @@ let calculateStats = function (arr) {
     let avg = sum / arr.length;
     return { min, max, avg };
 }
+
+/**
+ * Triggers the buzzer via a POST request to the server.
+ */
 let triggerBuzzer = function () {
     fetch('/trigger-buzzer', {
         method: 'POST',
@@ -37,6 +51,12 @@ let triggerBuzzer = function () {
     });
 }
 
+/**
+ * Controls an LED via a POST request to the server.
+ * 
+ * @param {number} pin - The GPIO pin number for the LED.
+ * @param {number} duration - The duration (in seconds) to keep the LED on.
+ */
 let controlLED = function(pin, duration) {
     fetch('/control-led', {
         method: 'POST',
@@ -54,47 +74,50 @@ let controlLED = function(pin, duration) {
     });
 };
 
+/**
+ * Checks sensor values against predefined thresholds and triggers alerts if necessary.
+ * 
+ * @param {number} humidity - The current humidity value.
+ * @param {number} temperature - The current temperature value.
+ * @param {number} gas - The current gas sensor value.
+ * @param {number} light - The current light sensor value.
+ * @param {number} soil - The current soil moisture value.
+ * @param {number} ultrasonic - The current ultrasonic sensor value.
+ */
 let checkAlerts = function (humidity, temperature, gas, light, soil, ultrasonic) {
     if (temperature > 50) {
-        
         triggerBuzzer();
         controlLED(15, 1);
         alert('Temperature is above 50°C!');
     } else if (temperature < 0) {
-        
         triggerBuzzer();
         controlLED(15, 1);
         alert('Temperature is below 0°C!');
     }
 
     if (humidity < 20) {
-        
         triggerBuzzer();
         controlLED(15, 1);
         alert('Humidity is below 20%!');
     } else if (humidity > 90) {
-        
         triggerBuzzer();
         controlLED(15, 1);
         alert('Humidity is above 90%!');
     }
 
     if (gas > 10000) {
-        
         triggerBuzzer();
         controlLED(12, 1);
-        alert('Gas lsensor value beyond threshold!');
+        alert('Gas sensor value beyond threshold!');
     }
 
     if (light != 0 && light != 1) {
-        
         triggerBuzzer();
         controlLED(3, 1);
         alert('Light sensor is not working properly!');
     }
 
     if (soil <= 0 || soil > 1023) {
-        
         triggerBuzzer();
         controlLED(5, 1);
         alert('Soil moisture is beyond range of the sensor!');
@@ -105,6 +128,16 @@ let checkAlerts = function (humidity, temperature, gas, light, soil, ultrasonic)
     }
 }
 
+/**
+ * Checks the number of consecutive zero readings for each sensor and alerts if necessary.
+ * 
+ * @param {number} humidity - The current humidity value.
+ * @param {number} temperature - The current temperature value.
+ * @param {number} gas - The current gas sensor value.
+ * @param {number} light - The current light sensor value.
+ * @param {number} soilMoisture - The current soil moisture value.
+ * @param {number} ultrasonic - The current ultrasonic sensor value.
+ */
 let checkConnection = function (humidity, temperature, gas, light, soilMoisture, ultrasonic) {
     if (humidity === 0) {
         zeroCount.humidity++;
@@ -142,6 +175,7 @@ let checkConnection = function (humidity, temperature, gas, light, soilMoisture,
         zeroCount.ultrasonic = 0;
     }
 
+    // Check if any sensor has had consecutive zero readings beyond the allowed threshold
     if (zeroCount.humidity >= maxZeroCycles && zeroCount.temperature < maxZeroCycles && zeroCount.gas < maxZeroCycles && zeroCount.light < maxZeroCycles && zeroCount.soilMoisture < maxZeroCycles && zeroCount.ultrasonic < maxZeroCycles) {
         alert('Connection check required for Humidity sensor');
     }
@@ -154,8 +188,8 @@ let checkConnection = function (humidity, temperature, gas, light, soilMoisture,
         alert('Connection check required for Gas sensor');
     }
 
-     if (zeroCount.light >= maxZeroCycles && zeroCount.humidity < maxZeroCycles && zeroCount.temperature < maxZeroCycles && zeroCount.gas < maxZeroCycles && zeroCount.soilMoisture < maxZeroCycles && zeroCount.ultrasonic < maxZeroCycles) {
-         alert('Connection check required for Light sensor');
+    if (zeroCount.light >= maxZeroCycles && zeroCount.humidity < maxZeroCycles && zeroCount.temperature < maxZeroCycles && zeroCount.gas < maxZeroCycles && zeroCount.soilMoisture < maxZeroCycles && zeroCount.ultrasonic < maxZeroCycles) {
+        alert('Connection check required for Light sensor');
     }
 
     if (zeroCount.soilMoisture >= maxZeroCycles && zeroCount.humidity < maxZeroCycles && zeroCount.temperature < maxZeroCycles && zeroCount.gas < maxZeroCycles && zeroCount.light < maxZeroCycles && zeroCount.ultrasonic < maxZeroCycles) {

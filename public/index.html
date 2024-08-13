@@ -8,83 +8,90 @@
     <title>Dashboard</title>
     <base href="/">
     <link href="style.css" rel="stylesheet" type="text/css">
+
+    <!-- Include the necessary JavaScript libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.8/mqtt.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script src="./mqtt.js" defer></script>
     <script src="./chartSetup.js" defer></script>
     <script src="./drawChart.js" defer></script>
     <script src="./utility.js" defer></script>
-    <!-- <script src="./buzzerTrigger.js" type="module"></script> -->
-    <!-- <script src="./ledController.js" "type="module"></script> -->
 </head>
 
 <body>
     <div class="container">
-        <h1>Sensor monitoring Dashboard</h1>
+        <h1>Sensor Monitoring Dashboard</h1>
 
+        <!-- Panel for Humidity and Temperature Charts -->
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title"><strong>Humidity and temperature Chart</strong></h3>
+                <h3 class="panel-title"><strong>Humidity and Temperature Chart</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="container1"></div>
-                <div class="stats" >
-                    <p>Humidity-stats</p>
+                <div class="stats">
+                    <p>Humidity Stats</p>
                     <p id="humidity-stats">Min: N/A, Max: N/A, Avg: N/A</p>
                 </div>
-                <div class="stats" >
-                    <p>Temperature-stats</p>
+                <div class="stats">
+                    <p>Temperature Stats</p>
                     <p id="temperature-stats">Min: N/A, Max: N/A, Avg: N/A</p>
                 </div>
             </div>
         </div>
 
+        <!-- Panel for Gas Sensor Chart -->
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title"><strong>Gas Sensor Chart</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="container2"></div>
-                <div class="stats" >
-                    <p>Gas-stats</p>
+                <div class="stats">
+                    <p>Gas Stats</p>
                     <p id="gas-stats">Min: N/A, Max: N/A, Avg: N/A</p>
                 </div>
             </div>
         </div>
+
+        <!-- Panel for Light Sensor Chart -->
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title"><strong>Light Sensor Chart</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="container3"></div>
-                <div class="stats" >
-                    <p>Light-stats</p>  
+                <div class="stats">
+                    <p>Light Stats</p>
                     <p id="light-stats">Min: N/A, Max: N/A, Avg: N/A</p>
                 </div>
             </div>
         </div>
+
+        <!-- Panel for Soil Moisture Sensor Chart -->
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title"><strong>Soil Moisture Sensor Chart</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="container4"></div>
-                <div class="stats" >
-                    <p>Soil-stats</p>
+                <div class="stats">
+                    <p>Soil Moisture Stats</p>
                     <p id="soil-stats">Min: N/A, Max: N/A, Avg: N/A</p>
                 </div>
             </div>
         </div>
+
+        <!-- Panel for Ultrasonic Sensor Chart -->
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title"><strong>Ultrasonic Sensor Chart</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="container5"></div>
-                <div class="stats" >
-                    <p>Distance-stats</p>
+                <div class="stats">
+                    <p>Distance Stats</p>
                     <p id="ultra-stats">Min: N/A, Max: N/A, Avg: N/A</p>
                 </div>
             </div>
@@ -92,4 +99,4 @@
     </div>
 </body>
 
-</html> 
+</html>

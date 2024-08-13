@@ -1,5 +1,7 @@
+// Arrays to store sensor data and timestamps
 let humArr = [], tempArr = [], gasArr = [], lightArr = [], soilArr = [], ultraArr = [], timeArr = [];
 
+// Highcharts configuration for Humidity and Temperature Sensor Data
 let myChart1 = Highcharts.chart('container1', {
     title: {
         text: 'Humidity and Temperature Sensor Data'
@@ -33,7 +35,7 @@ let myChart1 = Highcharts.chart('container1', {
     },
     series: [{
         name: 'Humidity',
-        data: [],
+        data: humArr,
         zones: [
             { value: 25, color: 'blue' },
             { value: 35, color: 'green' },
@@ -41,7 +43,7 @@ let myChart1 = Highcharts.chart('container1', {
         ]
     }, {
         name: 'Temperature',
-        data: [],
+        data: tempArr,
         zones: [
             { value: 25, color: 'blue' },
             { value: 35, color: 'green' },
@@ -64,6 +66,7 @@ let myChart1 = Highcharts.chart('container1', {
     }
 });
 
+// Highcharts configuration for Gas Sensor Data
 let myChart2 = Highcharts.chart('container2', {
     title: {
         text: 'Gas Sensor Data'
@@ -97,7 +100,7 @@ let myChart2 = Highcharts.chart('container2', {
     },
     series: [{
         name: 'Gas',
-        data: [],
+        data: gasArr,
         zones: [
             { value: 25, color: 'blue' },
             { value: 35, color: 'green' },
@@ -120,6 +123,7 @@ let myChart2 = Highcharts.chart('container2', {
     }
 });
 
+// Highcharts configuration for Light Sensor Data
 let myChart3 = Highcharts.chart('container3', {
     title: {
         text: 'Light Sensor Data'
@@ -153,10 +157,10 @@ let myChart3 = Highcharts.chart('container3', {
     },
     series: [{
         name: 'Light',
-        data: [],
+        data: lightArr,
         zones: [
-            { value: 0, color: 'black' },
-            { value: 1, color: 'green' },
+            { value: 0, color: 'green' },
+            { value: 1, color: 'black' },
             { color: 'red' }  
         ]
     }],
@@ -176,12 +180,13 @@ let myChart3 = Highcharts.chart('container3', {
     }
 });
 
+// Highcharts configuration for Soil Moisture Sensor Data
 let myChart4 = Highcharts.chart('container4', {
     title: {
-        text: 'SOil moisture Sensor Data'
+        text: 'Soil Moisture Sensor Data'
     },
     subtitle: {
-        text: 'Real-time Soil moisture Data Visualization'
+        text: 'Real-time Soil Moisture Data Visualization'
     },
     yAxis: {
         title: {
@@ -209,10 +214,11 @@ let myChart4 = Highcharts.chart('container4', {
     },
     series: [{
         name: 'Soil Moisture',
-        data: [],
+        data: soilArr,
         zones: [
             { value: 25, color: 'red' },
             { value: 35, color: 'green' },
+            { value: 1000, colour: 'red'},
             { color: 'blue' }  // Applies to values over 35
         ]
     }],
@@ -232,6 +238,7 @@ let myChart4 = Highcharts.chart('container4', {
     }
 });
 
+// Highcharts configuration for Ultrasonic Sensor Data
 let myChart5 = Highcharts.chart('container5', {
     title: {
         text: 'Ultrasonic Sensor Data'
@@ -265,7 +272,7 @@ let myChart5 = Highcharts.chart('container5', {
     },
     series: [{
         name: 'Distance',
-        data: [],
+        data: ultraArr,
         zones: [
             { value: 30, color: 'green' },
             { value: 100, color: 'blue' },
